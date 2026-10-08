@@ -22,9 +22,8 @@ Java GUI project for GUVI Java Programming Project Review 1.
 2. Open the project in IntelliJ IDEA / Eclipse / VS Code.
 3. Update username/password in `DatabaseConnection.java`.
 4. Run `Main.java`.
-5. Login with:
-   - Admin: admin@example.com / admin123
-   - User: user@example.com / user123
+5. Use the "Create Account" option on the login screen to register a new USER or ADMIN account.
+6. Login using the registered account and select the appropriate role.
 
 ## Maven
 Run:
