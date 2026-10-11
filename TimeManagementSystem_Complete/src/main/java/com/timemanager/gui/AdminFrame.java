@@ -271,48 +271,75 @@ public class AdminFrame extends JFrame {
     // =====================================================
     // MONITOR SYSTEM PERFORMANCE
     // =====================================================
-  private void showPerformanceGraph() {
+private void showPerformanceGraph() {
+    try {
+        PerformanceDAO dao = new PerformanceDAO();
 
-        try {
+        int completed = dao.getCompletedTasks();
+        int pending = dao.getPendingTasks();
 
-            PerformanceDAO dao =
-                    new PerformanceDAO();
+        JFrame graphFrame =
+                new JFrame("System Performance Graph");
 
-            int completed =
-                    dao.getCompletedTasks();
+        graphFrame.setSize(550, 470);
+        graphFrame.setLocationRelativeTo(this);
+        graphFrame.setDefaultCloseOperation(
+                JFrame.DISPOSE_ON_CLOSE
+        );
 
-            int pending =
-                    dao.getPendingTasks();
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBackground(Color.WHITE);
 
-            JFrame graphFrame =
-                    new JFrame("System Performance Graph");
+        // Existing task performance graph
+        mainPanel.add(
+                new PerformancePanel(completed, pending),
+                BorderLayout.CENTER
+        );
 
-            graphFrame.setSize(550, 400);
+        // Monitoring status
+        JPanel statusPanel = new JPanel(
+                new GridLayout(2, 1, 5, 5)
+        );
+        statusPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        "System Monitoring Status"
+                )
+        );
 
-            graphFrame.setLocationRelativeTo(this);
+        JLabel appStatus = new JLabel(
+                "Application Status: Running"
+        );
 
-            graphFrame.setDefaultCloseOperation(
-                    JFrame.DISPOSE_ON_CLOSE
-            );
+        boolean databaseOnline =
+        com.timemanager.DatabaseConnection.testConnection();
 
-            graphFrame.add(
-                    new PerformancePanel(
-                            completed,
-                            pending
-                    )
-            );
+JLabel dbStatus = new JLabel(
+        "Database Status: "
+                + (databaseOnline ? "Online" : "Offline")
+);
 
-            graphFrame.setVisible(true);
+        appStatus.setForeground(new Color(0, 128, 0));
 
-        } catch (Exception ex) {
+dbStatus.setForeground(
+        databaseOnline ? new Color(0, 128, 0) : Color.RED
+);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Unable to load performance graph.\n"
-                    + "Error: " + ex.getMessage(),
-                    "System Performance",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
+        statusPanel.add(appStatus);
+        statusPanel.add(dbStatus);
+
+        mainPanel.add(statusPanel, BorderLayout.SOUTH);
+
+        graphFrame.setContentPane(mainPanel);
+        graphFrame.setVisible(true);
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Unable to load performance graph.\n"
+                        + "Error: " + ex.getMessage(),
+                "System Performance",
+                JOptionPane.ERROR_MESSAGE
+        );
     }
+}
 }
