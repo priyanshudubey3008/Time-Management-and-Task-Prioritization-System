@@ -3,7 +3,6 @@ package com.timemanager.dao;
 import com.timemanager.DatabaseConnection;
 import com.timemanager.model.Task;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +39,52 @@ public class TaskDAO implements Repository<Task, Integer> {
         }
     }
 
-    public boolean delete(Integer id) throws SQLException {
-        try(Connection c=DatabaseConnection.getConnection();
-            PreparedStatement ps=c.prepareStatement("DELETE FROM tasks WHERE task_id=?")){
-            ps.setInt(1,id); return ps.executeUpdate()>0;
+public boolean updatePriorityScore(int taskId, double score)
+        throws SQLException {
+
+    String sql = "UPDATE tasks SET priority_score = ? WHERE task_id = ?";
+
+    try (Connection c = DatabaseConnection.getConnection();
+         PreparedStatement ps = c.prepareStatement(sql)) {
+
+        ps.setDouble(1, score);
+        ps.setInt(2, taskId);
+
+        return ps.executeUpdate() > 0;
+    }
+}   
+public boolean delete(Integer id) throws SQLException {
+    String deleteLogs = "DELETE FROM time_logs WHERE task_id = ?";
+    String deleteTask = "DELETE FROM tasks WHERE task_id = ?";
+
+    try (Connection c = DatabaseConnection.getConnection()) {
+        boolean oldAutoCommit = c.getAutoCommit();
+        c.setAutoCommit(false);
+
+        try {
+            try (PreparedStatement ps = c.prepareStatement(deleteLogs)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
+
+            int deleted;
+            try (PreparedStatement ps = c.prepareStatement(deleteTask)) {
+                ps.setInt(1, id);
+                deleted = ps.executeUpdate();
+            }
+
+            c.commit();
+            return deleted > 0;
+
+        } catch (SQLException ex) {
+            c.rollback();
+            throw ex;
+        } finally {
+            c.setAutoCommit(oldAutoCommit);
         }
     }
+}
+
 
     public Task findById(Integer id) throws SQLException {
         try(Connection c=DatabaseConnection.getConnection();
