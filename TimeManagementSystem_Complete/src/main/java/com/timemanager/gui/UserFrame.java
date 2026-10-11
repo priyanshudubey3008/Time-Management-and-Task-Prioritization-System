@@ -107,12 +107,7 @@ public class UserFrame extends JFrame {
                 show(ex);
             }
              
-            // JPanel p = new JPanel(new GridLayout(0, 2, 5, 5));
            JPanel p = new JPanel(new GridLayout(5, 2, 10, 10));
-            // JLabel title = new JLabel("👤 USER DASHBOARD", SwingConstants.CENTER);
-            // title.setFont(new Font("Arial", Font.BOLD, 24));
-            // p.add(title, BorderLayout.NORTH);
-
             p.add(new JLabel("Task Name"));
             p.add(name);
 
