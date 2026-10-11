@@ -52,6 +52,8 @@ public final class DatabaseInitializer {
                         continue;
                     }
                    System.out.println("Executing SQL: " + query);
+                   statement.execute(query);
+
                 }
             }
         }
