@@ -28,17 +28,6 @@ public class CategoryDAO {
         return list;
     }
 
-    // public boolean add(String name, String description) throws SQLException {
-    //     try (Connection c = DatabaseConnection.getConnection();
-    //          PreparedStatement ps = c.prepareStatement(
-    //              "INSERT INTO categories(category_name) VALUES(?)")) {
-
-    //         ps.setString(1, name);
-    //         return ps.executeUpdate() > 0;
-    //     }
-    // }
-
-    
 public boolean add(String name, String description) throws SQLException {
     String sql = "INSERT INTO categories(category_name) VALUES(?)";
 
