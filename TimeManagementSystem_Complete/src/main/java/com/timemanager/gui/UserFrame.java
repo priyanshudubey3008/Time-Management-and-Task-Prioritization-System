@@ -411,6 +411,7 @@ private void loadTasks() {
     }
 
     // DELETE TASK
+
 private void deleteTask() {
     int row = table.getSelectedRow();
 
@@ -433,15 +434,18 @@ private void deleteTask() {
         return;
     }
 
-    try {
-        if (timerRunning) {
-    showMsg("Please stop the active timer before deleting a task.");
-    return;
+    if (timerRunning) {
+        showMsg("Please stop the active timer before deleting a task.");
+        return;
+    }
 
+    try {
         boolean deleted = taskDAO.delete(taskId);
 
         if (deleted) {
-            JOptionPane.showMessageDialog(this, "Task deleted successfully.");
+            JOptionPane.showMessageDialog(
+                    this, "Task deleted successfully."
+            );
             loadTasks();
             updateTime();
         } else {
@@ -451,6 +455,7 @@ private void deleteTask() {
         show(ex);
     }
 }
+
 
     // =========================
     // UPDATE TOTAL TIME
