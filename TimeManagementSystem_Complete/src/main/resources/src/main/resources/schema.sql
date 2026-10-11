@@ -9,22 +9,16 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('ADMIN','USER') NOT NULL DEFAULT 'USER'
 );
 
--- CREATE TABLE IF NOT EXISTS categories (
---     category_id INT PRIMARY KEY AUTO_INCREMENT,
---     name VARCHAR(100) NOT NULL UNIQUE,
---     description VARCHAR(255)
--- );
-
 CREATE TABLE IF NOT EXISTS categories (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
-    category_name VARCHAR(50) NOT NULL UNIQUE
+   category_name VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(255)
 );
-
 CREATE TABLE IF NOT EXISTS prioritization_rules (
     rule_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    importance_weight INT NOT NULL DEFAULT 50,
-    deadline_weight INT NOT NULL DEFAULT 50,
+    rule_name VARCHAR(100) NOT NULL,
+    importance_weight DOUBLE NOT NULL DEFAULT 50,
+    deadline_weight DOUBLE NOT NULL DEFAULT 50,
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
@@ -56,11 +50,11 @@ INSERT IGNORE INTO users(name,email,password,role) VALUES
 ('System Admin','admin@example.com','admin123','ADMIN'),
 ('Demo User','user@example.com','user123','USER');
 
-INSERT IGNORE INTO categories(name,description) VALUES
-('Study','Academic study tasks'),
-('Project','College project work'),
-('Personal','Personal activities'),
-('Work','Professional work');
+INSERT IGNORE INTO categories(category_name) VALUES
+('Study'),
+('Project'),
+('Personal'),
+('Work');
 
 INSERT INTO prioritization_rules(rule_name,importance_weight,deadline_weight,active)
 SELECT 'Default Rule',60,40,TRUE
