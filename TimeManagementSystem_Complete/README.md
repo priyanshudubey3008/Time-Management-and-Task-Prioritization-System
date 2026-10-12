@@ -9,13 +9,26 @@ Java GUI project for GUVI Java Programming Project Review 1.
 - JDBC / MySQL Connector/J
 - Maven
 
-## Rubric coverage
-1. OOP: inheritance, polymorphism, interfaces, exception handling
-2. Collections & Generics: List<Task>, generic Repository interface
-3. Multithreading & Synchronization: task timer thread and synchronized time updates
-4. Database operation classes: UserDAO, TaskDAO, CategoryDAO, TimeLogDAO, RuleDAO
-5. JDBC database connectivity: DatabaseConnection
-6. JDBC CRUD operations
+## Rubric Coverage and Code Mapping
+
+1. OOP (Inheritance, Polymorphism, Interfaces, Exception Handling)
+   * Inheritance: `UserFrame`, `AdminFrame`, `LoginFrame`, and `RegisterFrame` extend `JFrame`; `TimerThread` extends `Thread`.
+   * Polymorphism and Generics: `PriorityService` uses a bounded generic method (`<T extends Task>`).
+   * Interfaces: `Repository<T, ID>` implemented by `TaskDAO`; `Task` implements `Prioritizable`.
+   * Exception Handling: Custom exceptions `DatabaseOperationException` and `ValidationException` in the `exception` package.
+2. Collections & Generics
+   * `List<Task>`, generic `Repository<T, ID>` interface, and the bounded generic method in `PriorityService`.
+3. Multithreading & Synchronization
+   * `TimerThread` extends `Thread` and runs the task timer. Its `getElapsedSeconds()` and `stopTimer()` methods are synchronized.
+   * `SynchronizedTimeTracker` uses synchronized methods `addSeconds()` and `getTotalSeconds()` to manage time updates safely.
+   * `UserFrame` also uses `synchronized (this)` blocks to coordinate access to shared state.
+4. Database Operation Classes (DAO)
+   * `UserDAO`, `TaskDAO`, `CategoryDAO`, `TimeLogDAO`, and `RuleDAO`.
+5. JDBC Connectivity
+   * `DatabaseConnection` for database connectivity.
+6. JDBC CRUD Operations
+   * `TaskDAO`: Add, view, update status, and delete tasks with time-log cleanup.
+   * `UserDAO`, `CategoryDAO`, and `RuleDAO`: Database operations handled by the respective classes.
 
 ## Setup
 
