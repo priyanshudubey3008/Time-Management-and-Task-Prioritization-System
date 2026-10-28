@@ -25,7 +25,6 @@ A Java GUI-based application developed for the GUVI Java Programming Project Rev
 - Administrative prioritization rules
 - Database connectivity and status monitoring
 
-*Note: The listed features should match the functionality implemented in the project.*
 
 ## Rubric Coverage
 
@@ -129,7 +128,6 @@ Time-Management-and-Task-Prioritization-System/
 └── README.md
 ```
 
-*Note: Adjust the directory tree to match the actual repository structure. If `pom.xml` is inside `TimeManagementSystem_Complete`, run Maven commands from that directory.*
 
 ## Database Access Classes
 
